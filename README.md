@@ -24,3 +24,4 @@ DEVHUB=http://user:pass@192.168.1.5:3000/ node app.js
 出来ること
 ----
 * ラズパイ上で動画を流す (video コマンド)
+* Youtube動画をダウンロードする
