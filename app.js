@@ -22,6 +22,8 @@ socket.on('message', function(data){
       player.play_suffle(function(msg){
         socket.emit('message',{name: name, room_id: 1, msg: msg});
       });
+    }else if (data.msg.match(/stop/i)){
+      player.stop();
     }else if (data.msg.match(/youtube\.com\/watch/i)){
       downloader.download(data.msg.split(" ")[1], data.msg.split(" ")[2], function(msg){
         socket.emit('message',{name: name, room_id: 1, msg: msg});

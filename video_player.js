@@ -12,12 +12,18 @@ module.exports.play_suffle = function(play_handler){
 
     if (player != null){
       player.quit();
-      player = null;
       return;
     }else{
       play_head_in_files(files, play_handler);
     }
   });
+}
+
+module.exports.stop = function(play_handler){
+  if (player != null){
+    player.quit();
+    player = null;
+  }
 }
 
 function play_head_in_files(files, play_handler){
@@ -30,6 +36,8 @@ function play_head_in_files(files, play_handler){
   play_handler('Now playing: ' + path.basename(file));
 
   player.on('close', function(){
+    if (player == null) return;
+
     play_head_in_files(files, play_handler);
   });
 }
