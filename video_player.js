@@ -9,7 +9,14 @@ module.exports.play_suffle = function(play_handler){
     if (err) throw err;
     files = shuffle(files).map(function(file){ return video_dir + file;});
     console.log(files);
-    play_head_in_files(files, play_handler);
+
+    if (player != null){
+      player.quit();
+      player = null;
+      return;
+    }else{
+      play_head_in_files(files, play_handler);
+    }
   });
 }
 
@@ -19,14 +26,8 @@ function play_head_in_files(files, play_handler){
   var file = files.shift();
   files.push(file);
 
-  if (player != null){
-    player.quit();
-    player = null;
-    return;
-  }
-
   player = Omx(file);
-  play_handler('now playing ' + path.basename(file));
+  play_handler('Now playing: ' + path.basename(file));
 
   player.on('close', function(){
     play_head_in_files(files, play_handler);
