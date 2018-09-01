@@ -6,6 +6,8 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "socket.io-client": "2.0.4"
+    "node-omxplayer": "^0.6.1",
+    "socket.io-client": "2.0.4",
+    "youtube-dl": "^1.12.2"
   }
 }
