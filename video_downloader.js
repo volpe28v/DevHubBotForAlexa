@@ -4,18 +4,33 @@ var video_dir = './videos/';
 
 var youtube_uri = null;
 var file_name = 'video.mp4';
-var quality = 137; // 1080p
 
-module.exports.download = function(youtube_uri, file_name, handler){
+var qualities = [
+  { reso: '1080p', value: 137 },
+  { reso: '720p',  value: 136 },
+  { reso: '480p',  value: 135 }
+];
+
+module.exports.download = function(youtube_uri, file_name, reso, handler){
   console.log("uri: " + youtube_uri);
   console.log("file_name: " + file_name);
-  console.log("quality: " + quality);
+  console.log("reso: " + reso);
+
+  var quality = qualities.filter(function(q){ return q.reso == reso; })[0];
+  if (quality == null) quality = qualities[0];
+
+  console.log("quality: " + quality.value);
 
   var video = youtubedl(youtube_uri,
-    ['--format=' + quality],
+    ['--format=' + quality.value],
     { cwd: __dirname });
 
+  handler('Try to download..');
   console.log('Getting information..');
+
+  video.on('error', function error(err) {
+    handler('Error Downloading: ' + err.message);
+  });
 
   var size = 0;
   video.on('info', function(info) {
@@ -42,7 +57,7 @@ module.exports.download = function(youtube_uri, file_name, handler){
     video.on('end', function(){
       console.log('');
       console.log('Download end');
-      handler('Downloaded: ' + info._filename);
+      handler('Complete to Download: ' + info._filename);
     });
   });
 }
