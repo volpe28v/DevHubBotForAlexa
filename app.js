@@ -5,6 +5,7 @@ var downloader = require('./video_downloader');
 
 var devhub_url = process.env.DEVHUB;
 var name = 'Alexa';
+var video_dir = './videos/';
 
 var socket = io.connect(devhub_url);
 socket.on('connect', function(){
@@ -28,7 +29,7 @@ socket.on('message', function(data){
       downloader.download(
         data.msg.split(" ")[1],
         data.msg.split(" ")[2],
-        data.msg.split(" ")[3],
+        video_dir + data.msg.split(" ")[3],
         function(msg){
           socket.emit('message',{name: name, room_id: 1, msg: msg});
         }
