@@ -5,6 +5,7 @@ var youtube_uri = null;
 var file_name = 'video.mp4';
 
 var qualities = [
+  { reso: '1080p', value: 22},
   { reso: '1080p', value: 137 },
   { reso: '720p',  value: 136 },
   { reso: '480p',  value: 135 }

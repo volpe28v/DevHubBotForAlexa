@@ -32,7 +32,7 @@ function play_head_in_files(files, play_handler){
   var file = files.shift();
   files.push(file);
 
-  player = Omx(file);
+  player = Omx(file, 'both');
   play_handler('Now playing: ' + path.basename(file));
 
   player.on('close', function(){
