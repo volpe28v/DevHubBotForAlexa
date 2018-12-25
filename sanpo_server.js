@@ -5,14 +5,17 @@ var path = require('path');
 var downloader = require('./video_downloader');
 var CronJob = require('cron').CronJob;
 
+var googleApiKey = process.env.GOOGLE_API_KEY;
 var youtubeUrl = 'https://www.youtube.com/watch?v=';
 var keyword = encodeURIComponent("ドリ散歩");
 var channelId = 'UCTfta7Ult6yLu7ru-WInOGg';
 var maxNum = 5;
-var getListURI = `https://www.googleapis.com/youtube/v3/search?key=AIzaSyASm1rVlmLTo7ojvP5FegeUc0gIXW9_zr4&type=video&q=${keyword}&part=snippet&maxResults=${maxNum}&order=date&channelId=${channelId}`
-var dir = './videos/';
+var getListURI = `https://www.googleapis.com/youtube/v3/search?key=${googleApiKey}&type=video&q=${keyword}&part=snippet&maxResults=${maxNum}&order=date&channelId=${channelId}`
 
-function SanpoServer(){
+function SanpoServer(dir){
+  var self = this;
+  this.dir = dir;
+
   this.startCron = function(pattern){
     new CronJob({
       cronTime: pattern,
@@ -51,7 +54,7 @@ function SanpoServer(){
           return {
             date: item.snippet.publishedAt,
             id: item.id.videoId,
-            savePath: dir + item.id.videoId + '.mp4'
+            savePath: self.dir + item.id.videoId + '.mp4'
           }
         });
         console.log(items);
@@ -85,14 +88,14 @@ function SanpoServer(){
   }
 
   function deleteOldVideos(){
-    var deleteList = fs.readdirSync(dir)
+    var deleteList = fs.readdirSync(self.dir)
       .filter(function(file){
-        return path.extname(dir + file) == ".mp4";
+        return path.extname(self.dir + file) == ".mp4";
       })
       .map(function(file){
         return {
-          filename: dir + file,
-          mtime: fs.statSync(dir + file).mtime
+          filename: self.dir + file,
+          mtime: fs.statSync(self.dir + file).mtime
         }
       })
       .sort((a,b) => b.mtime - a.mtime)

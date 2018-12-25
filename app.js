@@ -1,11 +1,12 @@
 var io = require('socket.io-client');
 var player = require('./video_player');
 var downloader = require('./video_downloader');
-
+var SanpoServer = require('./sanpo_server');
 
 var devhub_url = process.env.DEVHUB;
 var name = 'Alexa';
 var video_dir = './videos/';
+var sanpo = new SanpoServer(video_dir);
 
 var socket = io.connect(devhub_url);
 socket.on('connect', function(){
@@ -34,6 +35,8 @@ socket.on('message', function(data){
           socket.emit('message',{name: name, room_id: 1, msg: msg});
         }
       );
+    }else if (data.msg.match(/sanpo/i)){
+      sanpo.updateSanpo();
     }
   }
 });
