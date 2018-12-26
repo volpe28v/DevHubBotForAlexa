@@ -6,9 +6,16 @@ var SanpoServer = require('./sanpo_server');
 var devhub_url = process.env.DEVHUB;
 var name = 'Alexa';
 var video_dir = './videos/';
-var sanpo = new SanpoServer(video_dir);
 
 var socket = io.connect(devhub_url);
+
+function msg_handler(msg){
+  socket.emit('message',{name: name, room_id: 1, msg: msg});
+}
+
+var sanpo = new SanpoServer(video_dir, msg_handler);
+sanpo.startCron("0 30 0 * * *");
+
 socket.on('connect', function(){
   console.log("connect: " + devhub_url);
   socket.emit('name', {name: name});
@@ -31,9 +38,7 @@ socket.on('message', function(data){
         data.msg.split(" ")[1],
         data.msg.split(" ")[2],
         video_dir + data.msg.split(" ")[3],
-        function(msg){
-          socket.emit('message',{name: name, room_id: 1, msg: msg});
-        }
+        msg_handler
       );
     }else if (data.msg.match(/sanpo/i)){
       sanpo.updateSanpo();

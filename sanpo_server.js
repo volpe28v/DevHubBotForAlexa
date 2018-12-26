@@ -12,9 +12,10 @@ var channelId = 'UCTfta7Ult6yLu7ru-WInOGg';
 var maxNum = 5;
 var getListURI = `https://www.googleapis.com/youtube/v3/search?key=${googleApiKey}&type=video&q=${keyword}&part=snippet&maxResults=${maxNum}&order=date&channelId=${channelId}`
 
-function SanpoServer(dir){
+function SanpoServer(dir, handler){
   var self = this;
   this.dir = dir;
+  this.handler = handler;
 
   this.startCron = function(pattern){
     new CronJob({
@@ -79,7 +80,8 @@ function SanpoServer(dir){
         item.savePath,
         null,
         function(msg){
-          console.log(msg)
+          console.log(msg);
+          self.handler(msg);
         }
       );
     });
@@ -105,7 +107,9 @@ function SanpoServer(dir){
 
     deleteList.forEach(function(file){
       fs.unlink(file.filename, function (err) {
-        console.log(`Deleted ${file}`);
+        var msg = `Deleted ${file}`;
+        console.log(msg);
+        self.handler(msg);
       });
     });
   }
