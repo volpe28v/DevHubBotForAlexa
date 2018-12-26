@@ -9,7 +9,7 @@ var googleApiKey = process.env.GOOGLE_API_KEY;
 var youtubeUrl = 'https://www.youtube.com/watch?v=';
 var keyword = encodeURIComponent("ドリ散歩");
 var channelId = 'UCTfta7Ult6yLu7ru-WInOGg';
-var maxNum = 5;
+var maxNum = 10;
 var getListURI = `https://www.googleapis.com/youtube/v3/search?key=${googleApiKey}&type=video&q=${keyword}&part=snippet&maxResults=${maxNum}&order=date&channelId=${channelId}`
 
 function SanpoServer(dir, handler){
