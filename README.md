@@ -20,10 +20,11 @@ $ npm install
 ```
 
 ```
-DEVHUB=http://user:pass@192.168.1.5:3000/ node app.js
+GOOGLE_API_KEY=XXXXXXX DEVHUB=http://user:pass@192.168.1.5:3000/ node app.js
 ```
 
 出来ること
 ----
-* ラズパイ上で動画を流す (video コマンド)
-* Youtube動画をダウンロードする
+* ラズパイ上で動画を流す (@Alexsa video)
+* Youtube動画をダウンロードする (@Alexsa https://www.youtube.com/watch?v=xxxxxxxx video_name)
+* ドリ散歩の最新の10件のYoutube動画を自動ダウンロードする (or @Alexsa sanpo)
