@@ -17,6 +17,12 @@ function SanpoServer(dir, handler){
   this.dir = dir;
   this.handler = handler;
 
+  function callHandler(msg){
+    if (self.handler == null) return;
+
+    self.handler(msg);
+  }
+
   this.startCron = function(pattern){
     new CronJob({
       cronTime: pattern,
@@ -81,7 +87,7 @@ function SanpoServer(dir, handler){
         null,
         function(msg){
           console.log(msg);
-          self.handler(msg);
+          callHandler(msg);
         }
       );
     });
@@ -107,9 +113,9 @@ function SanpoServer(dir, handler){
 
     deleteList.forEach(function(file){
       fs.unlink(file.filename, function (err) {
-        var msg = `Deleted ${file}`;
+        var msg = `Deleted ${file.filename}`;
         console.log(msg);
-        self.handler(msg);
+        callHandler(msg);
       });
     });
   }

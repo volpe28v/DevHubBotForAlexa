@@ -14,7 +14,8 @@ function msg_handler(msg){
 }
 
 var sanpo = new SanpoServer(video_dir, msg_handler);
-sanpo.startCron("0 30 0 * * *");
+// NOTE: IFTTT で youtube の更新を監視する場合は定期更新は不要
+// sanpo.startCron("0 30 0 * * *");
 
 socket.on('connect', function(){
   console.log("connect: " + devhub_url);
