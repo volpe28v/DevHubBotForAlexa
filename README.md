@@ -28,3 +28,7 @@ GOOGLE_API_KEY=XXXXXXX DEVHUB=http://user:pass@192.168.1.5:3000/ node app.js
 * ラズパイ上で動画を流す (@Alexsa video)
 * Youtube動画をダウンロードする (@Alexsa https://www.youtube.com/watch?v=xxxxxxxx video_name)
 * ドリ散歩の最新の10件のYoutube動画を自動ダウンロードする (or @Alexsa sanpo)
+
+システム構成
+----
+![システム構成](https://user-images.githubusercontent.com/754962/50521466-3434d680-0b09-11e9-81cc-d9dafc9bd759.png)
