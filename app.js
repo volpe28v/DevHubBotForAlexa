@@ -2,6 +2,7 @@ var io = require('socket.io-client');
 var player = require('./video_player');
 var downloader = require('./video_downloader');
 var SanpoServer = require('./sanpo_server');
+var GugaTvServer = require('./gugatv_server');
 
 var devhub_url = process.env.DEVHUB;
 var name = 'Alexa';
@@ -12,6 +13,9 @@ var socket = io.connect(devhub_url);
 function msg_handler(msg){
   socket.emit('message',{name: name, room_id: 1, msg: msg});
 }
+
+const gugatv = new GugaTvServer(video_dir, msg_handler);
+gugatv.startCron("0 30 0 * * * ");
 
 var sanpo = new SanpoServer(video_dir, msg_handler);
 // NOTE: IFTTT で youtube の更新を監視する場合は定期更新は不要
@@ -43,6 +47,8 @@ socket.on('message', function(data){
       );
     }else if (data.msg.match(/sanpo/i)){
       sanpo.updateSanpo();
+    }else if (data.msg.match(/gugatv/i)){
+      gugatv.updateSanpo();
     }
   }
 });

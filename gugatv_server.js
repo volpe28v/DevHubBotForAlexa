@@ -7,13 +7,12 @@ var CronJob = require('cron').CronJob;
 
 var googleApiKey = process.env.GOOGLE_API_KEY;
 var youtubeUrl = 'https://www.youtube.com/watch?v=';
-var keyword = encodeURIComponent("ドリ散歩");
-var channelId = 'UCTfta7Ult6yLu7ru-WInOGg';
+var channelId = 'UCEsYUhxAE_nW5HHPj6WhT-g';
 var maxNum = 10;
 var delNum = 20;
-var getListURI = `https://www.googleapis.com/youtube/v3/search?key=${googleApiKey}&type=video&q=${keyword}&part=snippet&maxResults=${maxNum}&order=date&channelId=${channelId}`
+var getListURI = `https://www.googleapis.com/youtube/v3/search?key=${googleApiKey}&type=video&part=snippet&maxResults=${maxNum}&order=date&channelId=${channelId}`
 
-function SanpoServer(dir, handler){
+function GugaTvServer(dir, handler){
   var self = this;
   this.dir = dir;
   this.handler = handler;
@@ -132,4 +131,4 @@ function SanpoServer(dir, handler){
   }
 }
 
-module.exports = SanpoServer;
+module.exports = GugaTvServer;
